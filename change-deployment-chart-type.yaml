@@ -1,0 +1,39 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Devtron Labs
+paths:
+  /orchestrator/app/env/patch:
+    patch:
+      description: change the deployment template for an app and environment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                envId:
+                  type: integer
+                appId:
+                  type: integer
+                targetChartRefId:
+                  type: integer
+
+      responses:
+        '200':
+          description: patched data
+          content:
+            application/json:
+              schema:
+                type: object
+        '422':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userDetailedMessage:
+                    type: string
+
