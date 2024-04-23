@@ -54,6 +54,10 @@ paths:
 
 components:
   schemas:
+    Error:
+      required:
+        - code
+        - message
     ChartRefResponse:
       type: object
       properties:

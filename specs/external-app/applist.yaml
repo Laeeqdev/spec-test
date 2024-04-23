@@ -397,6 +397,12 @@ paths:
                 $ref: "#/components/schemas/HelmAppDeploymentManifestDetail"
 components:
   schemas:
+    UpdateReleaseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates success or failure of the update
     appListRequest:
       type: object
       properties:

@@ -55,13 +55,9 @@ components:
           description: Desired deployment type. For eg argo_cd / helm
         excludeApps:
           type: array
-          items:
-            type: string
           description: List of app ids to be excluded
         includeApps:
           type: array
-          items:
-            type: string
           description: List of app ids to be included (deployment will be changed only for these apps)
     DeploymentChangeStatus:
       type: object
@@ -141,4 +137,3 @@ components:
           type: string
           description: Error user message
   
-

@@ -97,4 +97,3 @@ components:
           type: string
           description: helm generated manifest
           example: "some manifest"
-

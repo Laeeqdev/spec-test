@@ -128,7 +128,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/NodeCapacityDetailDto'
+                  $ref: '#/components/schemas/NodeCapacityDetailDTO'
         '400':
           description: Bad Request. Input Validation error/wrong request body.
           content:
@@ -189,14 +189,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NodeDeleteDto'
+              $ref: '#/components/schemas/NodeCapacityDetailDTO'
       responses:
         '200':
           description: Successfully return node detail
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NodeCapacityDetailDto'
+                $ref: '#/components/schemas/NodeCapacityDetailDTO'
         '400':
           description: Bad Request. Input Validation error/wrong request body.
           content:
@@ -323,6 +323,77 @@ paths:
 
 components:
   schemas:
+    NodeCapacityDetailDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+        kind:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        k8sVersion:
+          type: string
+        cpu:
+          $ref: '#/components/schemas/ResourceDetailObject'
+        memory:
+          $ref: '#/components/schemas/ResourceDetailObject'
+        age:
+          type: string
+        status:
+          type: string
+        podCount:
+          type: integer
+        errors:
+          type: object
+          additionalProperties:
+            type: string
+        internalIp:
+          type: string
+        externalIp:
+          type: string
+        unschedulable:
+          type: boolean
+        createdAt:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelTaintObject'
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelTaintObject'
+        taints:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelTaintObject'
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeConditionObject'
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceDetailObject'
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodCapacityDto'
+        manifest:
+          type: object
+        clusterName:
+          type: string
+        nodeGroup:
+          type: string
+    Error:
+      required:
+        - code
+        - message
     ClusterCapacityDto:
       type: object
       properties:

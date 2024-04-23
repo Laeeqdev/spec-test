@@ -1,3 +1,7 @@
+openapi: 3.0.0
+info:
+  title: batch API specs
+  version: 1.0.0
 components:
   schemas:
     buildMaterial:
@@ -183,15 +187,18 @@ components:
         steps:
           type: array
           items:
-            setWeight:
-              type: integer
-              format: int32
-            pause:
-              type: object
-              properties:
-                duration:
-                  type: integer
-                  format: int32
+            type: object
+            properties:
+              setWeight:
+                type: integer
+                format: int32
+              pause:
+                type: object
+                properties:
+                  duration:
+                    type: integer
+                    format: int32
+
     recreateStrategy:
       type: object
     rollingStrategy:
@@ -520,22 +527,38 @@ paths:
       requestBody:
         description: payload to generate temporary token for this user
         content:
-          'application/json':
+          application/json:
             schema:
-              pipelineRequest:
-                $ref: '#/components/schemas/pipelineRequest'
+              $ref: '#/components/schemas/pipelineRequest'
       responses:
         '200':
           description: token generated successfully
-          result:
-            type: object
-            properties:
-              success:
-                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
   /batch/workflow:
     get:
-
+      description: Retrieve workflow data
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object  # Define the schema for the response here if needed
     post:
+      description: Create a new workflow
+      responses:
+        '200':
+          description: Workflow created successfully
+          content:
+            application/json:
+              schema:
+                type: object  # Define the schema for the response here if needed
 
 
 

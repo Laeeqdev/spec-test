@@ -36,4 +36,3 @@ paths:
                 properties:
                   userDetailedMessage:
                     type: string
-

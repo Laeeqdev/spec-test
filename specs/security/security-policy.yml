@@ -84,6 +84,14 @@ paths:
                 $ref: '#/components/schemas/CreateVulnerabilityPolicyResponse'
 components:
   schemas:
+    ResourceLevel:
+      description: resource level
+      type: string
+      enum:
+        - Global
+        - Gluster
+        - Environment
+        - Application
     Error:
       description: Error object
       type: object

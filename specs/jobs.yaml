@@ -1,0 +1,216 @@
+openapi: "3.0.0"
+info:
+  title: Jobs
+  version: "1.0"
+paths:
+  /orchestrator/job:
+    post:
+      description: Create and clone a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateJob"
+      responses:
+        "200":
+          description: Used to give response once a job is created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResponse"
+  /orchestrator/job/list:
+    post:
+      description: Get the list of all jobs by applying filters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobList"
+      responses:
+        "200":
+          description: Used to give response of list of jobs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobListResponse"
+  /orchestrator/job/ci-pipeline/list/{jobId}:
+    get:
+      description: Fetch details of job ci-pipelines for the overview page
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Used to give response of list of job ci-pipelines
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobCiPipelineListResponse"
+
+components:
+  schemas:
+    CreateJob:
+      type: object
+      properties:
+        appName:
+          type: string
+          description: Name of the job
+          example: "my-job-1"
+        isJob:
+          type: boolean
+          description: States whether it's a job or an app
+          example: true
+        teamId:
+          type: integer
+          description: Team id
+          example: 1
+        templateId:
+          type: integer
+          description: Id of the job it wants to clone
+          example: 18
+        labels:
+          type: array
+          items:
+            $ref: "#/components/schemas/Label"
+        description:
+          type: string
+          description: Description of the job
+          example: "This is my first Job"
+    Label:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "hello"
+        value:
+          type: string
+          example: "world"
+        propagate:
+          type: boolean
+          example: false
+    ActionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id of the job once it's created
+          example: 25
+        appName:
+          type: string
+          description: Name of the job once it's created
+          example: "my-job-1"
+        material:
+          type: array
+          items:
+            $ref: "#/components/schemas/GitMaterial"
+        teamId:
+          type: integer
+          description: Team id
+          example: 1
+        templateId:
+          type: integer
+          description: Template id
+          example: 0
+        description:
+          type: string
+          description: Description of the job
+          example: "This is my first Job"
+        isJob:
+          type: boolean
+          description: Indicates whether it is a job or an app
+          example: true
+    GitMaterial:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        id:
+          type: integer
+        gitProviderId:
+          type: integer
+        checkoutPath:
+          type: string
+        fetchSubmodules:
+          type: boolean
+        isUsedInCiConfig:
+          type: boolean
+    JobList:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            type: integer
+          description: Project ids
+          example: [1,2]
+        appStatuses:
+          type: array
+          items:
+            type: string
+          description: Filter of app ci-build status
+          example: ["Succeeded", "Starting"]
+        sortBy:
+          type: string
+          description: Sort by constraint
+          example: "appNameSort"
+        sortOrder:
+          type: string
+          description: Sort order
+          example: "ASC"
+        offset:
+          type: integer
+          description: Number from which we want our jobs
+          example: 0
+        size:
+          type: integer
+          description: Number of jobs we want
+          example: 20
+    JobListResponse:
+      type: object
+      properties:
+        jobContainers:
+          type: array
+          items:
+            $ref: "#/components/schemas/JobContainer"
+        jobCount:
+          type: integer
+    JobContainer:
+      type: object
+      properties:
+        jobId:
+          type: integer
+        jobName:
+          type: string
+        description:
+          type: string
+        ciPipelines:
+          type: array
+          items:
+            $ref: "#/components/schemas/JobCiPipeline"
+    JobCiPipeline:
+      type: object
+      properties:
+        ciPipelineId:
+          type: integer
+        status:
+          type: string
+        lastRunAt:
+          type: string
+          format: date-time
+        lastSuccessAt:
+          type: string
+          format: date-time
+    JobCiPipelineListResponse:
+      type: object
+      properties:
+        ciPipelines:
+          type: array
+          items:
+            $ref: "#/components/schemas/JobCiPipeline"
