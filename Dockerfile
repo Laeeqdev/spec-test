@@ -12,8 +12,8 @@ RUN npm install
 RUN npm install -g @redocly/openapi-cli
 
 # Copy the entire spec directory to the working directory
-COPY ./spec ./spec
+COPY ./specs ./specs
 
 # Command to run Redocly preview
-CMD ["redocly", "preview", "-d", "./spec"]
+CMD ["redocly", "preview", "-d", "./specs"]
 
