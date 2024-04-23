@@ -6,7 +6,6 @@ WORKDIR /app
 
 
 # Install dependencies
-RUN npm install
 
 # Install Redocly CLI globally
 RUN npm install -g @redocly/openapi-cli
